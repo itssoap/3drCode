@@ -1,15 +1,19 @@
 import pyqrcode
 import sys
+import os
 
-color=[[0,255,255,255],
-       [255,0,255,255],
-       [255,255,0,255]]
+color=[[0,255,255,255], #cyan
+       [255,0,255,255], #magenta
+       [255,255,0,255]] #yellow
+
+bg=[0,0,0,0] #(r,g,b,a) scheme. Alpha channel for Bg is 0 for transparency
 def outQR(a):
     i=0
     for data in a:
         url=pyqrcode.create(data)
-        with open(str(i)+'.png','w') as fstream:
-            url.png()
+        file=os.path.join('out/', str(i+1)+'.png')
+        url.png(file, scale=100, module_color=color[i], background=bg)
+        i+=1
 
 if __name__ == "__main__":
     #take data from console
@@ -26,5 +30,6 @@ if __name__ == "__main__":
     except IndexError: #if it doesn't, leave the list as it is
         pass
     #a=a[:].encode('utf-8')
-    print(a[:])
+    outQR(a)
+    
     
