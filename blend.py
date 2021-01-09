@@ -1,29 +1,27 @@
 from PIL import Image
-image1 = Image.open(r"out/1.png")
-image2 = Image.open(r"out/2.png")
-image3 = Image.open(r"out/3.png")
-#image1.show()
-#image2.show()
-#image3.show()
-image4 = image1.convert("RGBA")
-image5 = image2.convert("RGBA")
-image6 = image3.convert("RGBA")
-alphaBlended = Image.blend(image5, image6, alpha=1/2)
-#alphaBlended.show()
-final1 = Image.blend(image4, alphaBlended, alpha=2/3)
-#final1.show()
-final1=final1.convert("RGB")
-#bg = Image.new("RGBA", final1.size, "WHITE")
-#bg.paste(final1,(0,0), final1)
-#bg=bg.convert("RGB").save("muxed.jpg")
-datas = final1.getdata()
+import numpy as np
 
-new_image_data = []
-for item in datas:
-    if item==(0,0,0):
-        new_image_data.append((255,255,255))
-    else:
-        new_image_data.append(item)
-final1.putdata(new_image_data)
-final1.show()
-final1.convert("RGB").save("muxed.jpg")
+# Load both images and make into Numpy arrays
+a=np.array(Image.open('out/1.png').convert('RGBA'))
+b=np.array(Image.open('out/2.png').convert('RGBA'))
+c=np.array(Image.open('out/3.png').convert('RGBA'))
+# Make masks of all opaque pixels in each image, i.e. alpha>0
+mA = a[...,3] > 0
+mB = b[...,3] > 0
+mC = c[...,3] > 0
+
+# Make empty result image
+res = np.zeros_like(a)
+res[mA] = np.uint8([0,255,255,255])
+res[mB] = np.uint8([255,0,255,255])
+res[mC] = np.uint8([255,255,0,255])
+res[mA & mB] = np.uint8([0,0,255,255])
+res[mB & mC] = np.uint8([255,0,0,255])
+res[mC & mA] = np.uint8([0,255,0,255])
+res[mA & mB & mC] = np.uint8([0,0,0,255])
+# Save result
+Image.fromarray(res).save("newmux.png")
+image=Image.fromarray(res)
+new_image = Image.new("RGBA", image.size, "WHITE") # Create a white rgba background
+new_image.paste(image, (0, 0), image)              # Paste the image on the background. Go to the links given below for details.
+new_image.convert('RGB').save('test.jpg', "JPEG")
