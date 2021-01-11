@@ -10,8 +10,13 @@ bg=[0,0,0,0] #(r,g,b,a) scheme. Alpha channel for Bg is 0 for transparency
 def outQR(a):
     i=0
     for data in a:
+        if os.path.isdir('out'):
+            pass
+        else:
+            os.mkdir("out")
+        os.system("mkdir out")
         url=pyqrcode.create(data)
-        file=os.path.join('out/', str(i+1)+'.png')
+        file=os.path.join('out',str(i+1)+'.png')
         url.png(file, scale=100, module_color=color[i], background=bg)
         i+=1
 
@@ -31,5 +36,4 @@ if __name__ == "__main__":
         pass
     #a=a[:].encode('utf-8')
     outQR(a)
-    
     
