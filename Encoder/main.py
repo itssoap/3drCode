@@ -1,6 +1,7 @@
 import pyqrcode
 import sys
 import os
+from blend import blend
 
 color=[[0,255,255,255], #cyan
        [255,0,255,255], #magenta
@@ -20,7 +21,7 @@ def outQR(a):
         url.png(file, scale=100, module_color=color[i], background=bg)
         i+=1
 
-if __name__ == "__main__":
+def main():
     #take data from console
     a=' '.join(map(str,sys.argv[1:])).encode('utf-8') #select all the words if spaces in between and join them to make a string
     #Unicode-8 encoding in case data includes non-ASCII characters
@@ -36,4 +37,7 @@ if __name__ == "__main__":
         pass
     #a=a[:].encode('utf-8')
     outQR(a)
-    
+    blend()
+
+if __name__ == "__main__":    
+    main()
