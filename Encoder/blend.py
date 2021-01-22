@@ -20,8 +20,9 @@ res[mB & mC] = np.uint8([255,0,0,255])
 res[mC & mA] = np.uint8([0,255,0,255])
 res[mA & mB & mC] = np.uint8([0,0,0,255])
 # Save result
-Image.fromarray(res).save("newmux.png")
+
 image=Image.fromarray(res)
 new_image = Image.new("RGBA", image.size, "WHITE") # Create a white rgba background
 new_image.paste(image, (0, 0), image)              # Paste the image on the background. Go to the links given below for details.
+new_image.convert('RGB').save('test.png', "PNG")
 new_image.convert('RGB').save('test.jpg', "JPEG")
