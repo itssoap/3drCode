@@ -1,6 +1,8 @@
 from PIL import Image
-from extractor import colorset, woohoo_machine_learning
+from extractor import color_remove
 
-tempholder=colorset("newmux.png")
-woohoo_machine_learning(tempholder)
+#tempholder=colorset("test.jpg")
+#woohoo_machine_learning("test.jpg")
+
 #print(colors)
+color_remove()
