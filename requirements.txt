@@ -1,0 +1,7 @@
+pyqrcode
+Pillow
+pypng
+pyzbar
+opencv-contrib-python
+numpy
+matplotlib
