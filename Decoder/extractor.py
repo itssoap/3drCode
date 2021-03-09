@@ -14,7 +14,7 @@ def color_remove(file):
     #thresholded = cv2.cvtColor(mask, cv2.COLOR_GRAY2BGR)
     #inverted = 255 - thresholded
     cv2.imwrite("Decoder/3.png", img_array1)
-    str1=enhance_data(str(1))
+    str1=enhance_data(str(3))
     # cv2.imwrite("redblue.jpg", img_array)
     img_array2[:, :, 2] = 0
     img_array2[:, :, 0] = 0
@@ -32,5 +32,13 @@ def color_remove(file):
     #thresholded = cv2.cvtColor(mask, cv2.COLOR_GRAY2BGR)
     #inverted = 255 - thresholded
     cv2.imwrite("Decoder/1.png", img_array3)
-    str3=enhance_data(str(3))
-    print("Data string decoded: "+str1+str2+str3)
+    str3=enhance_data(str(1))
+    try:
+        str1=str1[0][0].decode()
+        str2=str2[0][0].decode()
+        str3=str3[0][0].decode()
+    except IndexError:
+        print("Not decoded, possibly try with a better image.")
+        return
+    
+    print("Data string decoded: "+str3+str2+str1)
