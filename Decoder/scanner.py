@@ -4,12 +4,13 @@ import numpy as np
 from PIL import Image
 from time import sleep
 import random
+import string
 from Decoder.extractor import color_remove
 
 def ipcam():
     #1
     camera = cv2.VideoCapture(0)
-    choice=input("Do you want to use:\n 1. Webcam\n2. IPCam\nEnter your choice: ")
+    choice=int(input("Do you want to use:\n 1. Webcam\n2. IPCam\nEnter your choice: "))
     if choice==2:
         address= input("Enter IPCam address: ") #using IP cam 
         camera.open(address)
@@ -49,10 +50,10 @@ def ipcam():
         bot_right_y = max([y1,y2,y3,y4])
         cv2.imshow('Barcode/QR code reader', frame)
         if cv2.waitKey(1) & 0xFF == 27 or barcode_info!=None:
-            name=''.join(random.choices(string.ascii_uppercase +
-                             string.digits, k = 5))
+            #name=''.join(random.choices(string.ascii_uppercase + string.digits, k = 5))
+            name='temp1'
             cv2.imwrite(str(name)+'.png', frame[int(top_left_y):int(bot_right_y+1), int(top_left_x):int(bot_right_x+1)])
-            print(pts)
+            #print(pts)
             color_remove(name)
             break
         
